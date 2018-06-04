@@ -1,0 +1,10 @@
+install mongodb setup files
+
+goto cmd as administrator
+$cd '/program files/MongoDB/server/3.6/bin
+and $mongod.exe --dbpath C:\Users\hp\mongo-data\db
+open another console
+$mongo.exe
+//and you are done
+1. $db.Todos.insert({text: 'Create new node course'})
+2. $db.Todos.find({})
