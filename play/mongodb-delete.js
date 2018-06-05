@@ -9,32 +9,32 @@ MongoClient.connect(dbURL, (err, DB) => {
     if (err) return console.log('Unable to connect to MongoDB server', err);
     var db = DB.db('TodoApp');
 
-    //deleteMany
-    // db.collection('Todos').deleteMany({
-    //     text: 'eat lunch'
-    // }).then((result) => {
-    //     console.log(result);
-    // }, (err) => {
-    //     console.log('Unable to fetch ', err)
-    // })
+    deleteMany
+    db.collection('Todos').deleteMany({
+        text: 'eat lunch'
+    }).then((result) => {
+        console.log(result);
+    }, (err) => {
+        console.log('Unable to fetch ', err)
+    })
 
-    //deleteOne
-    // db.collection('Todos').deleteOne({
-    //     text: 'eat lunch'
-    // }).then((result) => {
-    //     console.log(result);
-    // }, (err) => {
-    //     console.log('Unable to fetch ', err)
-    // })
+    deleteOne
+    db.collection('Todos').deleteOne({
+        text: 'eat lunch'
+    }).then((result) => {
+        console.log(result);
+    }, (err) => {
+        console.log('Unable to fetch ', err)
+    })
 
-    // findOneAndDelete
-    // db.collection('Todos').findOneAndDelete({
-    //     text: 'eat lunch'
-    // }).then((result) => {
-    //     console.log(result);
-    // }, (err) => {
-    //     console.log('Unable to fetch ', err)
-    // })
+    findOneAndDelete
+    db.collection('Todos').findOneAndDelete({
+        text: 'eat lunch'
+    }).then((result) => {
+        console.log(result);
+    }, (err) => {
+        console.log('Unable to fetch ', err)
+    })
 
     db.collection('Users').deleteMany({
         name: 'Brinda Subedi'
