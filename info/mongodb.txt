@@ -15,6 +15,11 @@ $heroku Create
 $heroku addons:create mongolab:sandbox
 //$heroku config
 
+//to push heroku and git
+git push heroku master
+
+$heroku logs //can show log
+
 //////////////MONGO DB//////////////////////
 [Node.js MongoDB Driver API:]
  http://mongodb.github.io/node-mongodb-native/3.0/api/
