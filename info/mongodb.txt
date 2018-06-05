@@ -9,6 +9,11 @@ $mongo.exe
 1. $db.Todos.insert({text: 'Create new node course'})
 2. $db.Todos.find({})
 
+//add to heroku 
+$heroku Create
+//addon mongolab
+$heroku addons:create mongolab:sandbox
+//$heroku config
 
 //////////////MONGO DB//////////////////////
 [Node.js MongoDB Driver API:]

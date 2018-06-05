@@ -6,7 +6,7 @@ var {User} = require('./model/user');
 var {Todo} = require('./model/todo');
 
 var app = express();
-
+const port = process.env.PORT;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: true
@@ -45,13 +45,14 @@ app.get('/todos/:id', (req, res) => {
 
     Todo.findById(id).then( (todo) => {
         if(!todo) return res.status(404).send();
+
         res.status(200).send({todo});
     }, (err) => {res.status(404).send(err)});
 })
 
 
-app.listen(3000, () => {
-    console.log('server is up @3000 port.');
+app.listen(port, () => {
+    console.log(`server is up @${port} port.`);
 });
 
 module.exports.app = app;
