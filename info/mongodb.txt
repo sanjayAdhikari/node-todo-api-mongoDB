@@ -8,3 +8,14 @@ $mongo.exe
 //and you are done
 1. $db.Todos.insert({text: 'Create new node course'})
 2. $db.Todos.find({})
+
+
+//////////////MONGO DB//////////////////////
+[Node.js MongoDB Driver API:]
+ http://mongodb.github.io/node-mongodb-native/3.0/api/
+
+[mmongoDB documentation]
+https://docs.mongodb.com/
+
+[Mongoose.js Object modeling]
+http://mongoosejs.com/docs/index.html
