@@ -1,3 +1,13 @@
+var env = process.env.NODE_ENV || 'development';
+console.log('***env***',env);
+if(env === 'development'){
+    process.env.PORT = 3000;
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp';
+}else if( env === 'test'){
+    process.env.PORT = 3000;
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest';        
+}
+
 const _ = require('lodash');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -9,7 +19,7 @@ var {User} = require('./model/user');
 var {Todo} = require('./model/todo');
 
 var app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: true
@@ -32,6 +42,7 @@ app.post('/todos', (req, res) => {
      });
 });
 
+// get all todos
 app.get('/todos', (req, res) => {
     Todo.find().then( (todos) => {
         res.status(200).send({todos});
@@ -40,7 +51,7 @@ app.get('/todos', (req, res) => {
     })
 });
 
-// GET /todos/1231323
+// GET /todos/1231323 -get particular todo
 app.get('/todos/:id', (req, res) => {
     var id = req.params.id;
 
@@ -54,7 +65,7 @@ app.get('/todos/:id', (req, res) => {
 })
 
 
-//DELETE /todos/id
+//DELETE /todos/id -delete particular todo
 app.delete('/todos/:id', (req,res) => {
     var id = req.params.id;
     if(!ObjectID.isValid(id)) return res.status(400).send();
@@ -63,7 +74,7 @@ app.delete('/todos/:id', (req,res) => {
     }, (err) => res.status(404).send()).catch( (err)=> res.status(404).send())
 })
 
-// Path /todos/id
+// Path /todos/id -update the todo
 app.patch('/todos/:id', (req, res) => {
    var id = req.params.id;
    var body = _.pick(req.body,['text', 'completed']);
@@ -84,6 +95,22 @@ app.patch('/todos/:id', (req, res) => {
    })
 })
 
+// FOR Users
+
+// POST /user
+app.post('/user', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+    var user = new User(body);
+    
+    user.save().then(() => {
+      return user.generateAuthToken();
+    }).then((token) => {
+        res.header('x-auth', token,).json({data,user});
+    }, (err) => res.status(404).send(err)).catch((e) => res.status(400).send(e))
+  });
+
+
+// Firing up the server
 app.listen(port, () => {
     console.log(`server is up @${port} port.`);
 });
