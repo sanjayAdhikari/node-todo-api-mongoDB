@@ -1,5 +1,6 @@
 node_modules/
 README.md
 mongo.bat
+server/config/config.json
 
 
