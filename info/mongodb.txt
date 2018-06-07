@@ -29,3 +29,6 @@ https://docs.mongodb.com/
 
 [Mongoose.js Object modeling]
 http://mongoosejs.com/docs/index.html
+
+[mongoose middleware]
+http://mongoosejs.com/docs/middleware.html
