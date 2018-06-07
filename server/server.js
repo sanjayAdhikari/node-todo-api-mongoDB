@@ -1,12 +1,4 @@
-var env = process.env.NODE_ENV || 'development';
-console.log('***env***', env);
-if (env === 'development') {
-    process.env.PORT = 3000;
-    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp';
-} else if (env === 'test') {
-    process.env.PORT = 3000;
-    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest';
-}
+require('./config/config');
 
 const _ = require('lodash');
 var express = require('express');
@@ -39,7 +31,7 @@ app.post('/todos', (req, res) => {
         res.send(doc);
     }, (err) => {
         // console.log('Error occured:',err);
-        res.status(400).send(e); //400 is a bad request error
+        res.status(400).send(err); //400 is a bad request error
     });
 });
 
@@ -124,13 +116,6 @@ app.post('/user', (req, res) => {
     }, (err) => res.status(404).send(err)).catch((e) => res.status(400).send(e))
 });
 
-app.get('/user', (req, res) => {
-    User.find().then( (users) => {
-        res.send(users);
-    }).catch( (err) => res.status(404).send(err))
-})
-
-
 app.get('/user/me', authenticate, (req, res) => {
     var token = req.header('x-auth');
     
@@ -143,8 +128,23 @@ app.get('/user/me', authenticate, (req, res) => {
         res.status(401).send();
     });
 });
+
+app.post('/user/login', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+
+    User.findByCredential(body.email, body.password).then((user) => {
+        
+        user.generateAuthToken().then((token) => {
+            res.header('x-auth', token).send(user);
+        })
+        
+    }).catch((e) => {
+        res.status(404).send();
+    });
+});
+
 // Firing up the server
-app.listen(port, () => {
+app.listen(port || 3000, () => {
     console.log(`server is up @${port} port.`);
 });
 
