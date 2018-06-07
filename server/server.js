@@ -137,11 +137,17 @@ app.post('/user/login', (req, res) => {
         user.generateAuthToken().then((token) => {
             res.header('x-auth', token).send(user);
         })
-        
+
     }).catch((e) => {
         res.status(404).send();
     });
 });
+
+app.delete('/user/me/token', authenticate, (req, res) => {
+    req.user.removeToken(req.token).then( ()=> {
+        res.status(200).send();
+    }, (err) => res.status(401).send());
+})
 
 // Firing up the server
 app.listen(port || 3000, () => {
